@@ -1,66 +1,65 @@
 import React, { useState , useEffect } from "react";
 import ListGroup from 'react-bootstrap/ListGroup';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Badge from 'react-bootstrap/Badge';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
 
 const Home = (props)  => {
 
 	const [inputValue, setInputValue] = useState("")
-	const [cards, setCards] = useState([])
+	const [tasks, setTasks] = useState([])
 
 	const handleAdd = (e) => {
-		let newArray = [...cards]
-		//if(inputValue.length > 3){
+		let newArray = [...tasks]
 		if (e.key === 'Enter'){
 			newArray.push(inputValue)
-			setCards(newArray)
+			setTasks(newArray)
 			setInputValue("")
 		}
-			
-		//}else{
-			//alert("NO SEAS VAGO ESCRIBE MAS")
-		//}
-		/*setCards([...cards, inputValue])*/
 	}
 
-	// const _handleKeyDown = (e) => {
-	// 	if (e.key === 'Enter') {
-	// 	  handleAdd
-	// 	}
-	// }
+	const handleDelete = (currentIndex) => {
+		let newTasks = tasks.filter((task, index)=> index!=currentIndex)
+		setTasks(newTasks)
+		
+	}
+
 	
   	return (
-		<div className="row d-flex justify-content-center">
-			<div className="col">
-				<input value={inputValue} 
+		<InputGroup className="container">
+			<div className="col-12">
+				<Form.Control
+				placeholder="What needs to be done?"
+				aria-label="Recipient's username"
+				aria-describedby="basic-addon2"
+				value={inputValue} 
 				onChange={(event) =>setInputValue(event.target.value)} 
 				type="text"
-				onKeyDown={handleAdd}></input>
-				{/* <button onClick={handleAdd}> anadir </button> */}
+				onKeyDown={handleAdd}/>
 			</div>
-			<ListGroup className="col-12">
-				{
-					cards.map((card,index)=>{
-						return(
-							// <Card key={index} style={{ width: '18rem' }}>
-							// 	<Card.Img variant="top" src="https://picsum.photos/200/300" />
-							// 	<Card.Body>
-							// 		<Card.Title>{card}</Card.Title>
-							// 		<Card.Text>
-							// 		Some quick example text to build on the card title and make up the
-							// 		bulk of the card's content.
-							// 		</Card.Text>
-							// 		<Button variant="primary">Go somewhere</Button>
-							// 	</Card.Body>
-							// </Card>
-							<ListGroup.Item key={index}>{card}</ListGroup.Item>
-						)
-					})
-					
-				}
-			</ListGroup>
-		</div>
+			<div className="col-12">
+				<ListGroup className="">
+					{
+						tasks.map((task,index)=>{
+							return(
+								<ListGroup.Item key={index} 
+								className="d-flex justify-content-between align-items-start">
+									<div className="ms-2 me-auto">
+										{task}
+        							</div>
+									<div onClick={(e) => handleDelete(index)}>
+										<i className="far fa-trash-alt deleteButton"></i>
+									</div>
+								</ListGroup.Item>
+							)
+						})
+						
+					}
+				</ListGroup>
+			</div>
+			
+      	</InputGroup>
   	);
 }
 
