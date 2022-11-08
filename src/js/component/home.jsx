@@ -27,9 +27,13 @@ const Home = (props)  => {
 
 	
   	return (
-		<InputGroup className="container">
-			<div className="col-12">
+		<InputGroup className="container justify-content-center">
+			<div className="titleBox">
+				<h1 className="title" >To Dos</h1>
+			</div>
+			<div className="col-12 toDo">
 				<Form.Control
+				className="inputBoxToDo"
 				placeholder="What needs to be done?"
 				aria-label="Recipient's username"
 				aria-describedby="basic-addon2"
@@ -44,8 +48,8 @@ const Home = (props)  => {
 						tasks.map((task,index)=>{
 							return(
 								<ListGroup.Item key={index} 
-								className="d-flex justify-content-between align-items-start">
-									<div className="ms-2 me-auto">
+								className="d-flex justify-content-between align-items-start inputBoxToDo">
+									<div className="ms-2 me-auto taskElement">
 										{task}
         							</div>
 									<div onClick={(e) => handleDelete(index)}>
